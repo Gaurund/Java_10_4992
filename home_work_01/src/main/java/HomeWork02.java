@@ -39,7 +39,7 @@ public class HomeWork02 {
     private static void checkReversedStrs(String firstStr, String secondStr) {
         String tempStr = new StringBuilder(secondStr).reverse().toString();
         if (firstStr.equals(tempStr)) {
-            System.out.println("Yes, it seems to me like one of them is reversed another!");
+            System.out.println("Yes, it seems to me like one of them is a reversed another!");
         } else {
             System.out.println("Nope! It's not a palindrome.");
         }
