@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -7,25 +6,25 @@ public class HomeWork03 {
 
     public static void main(String[] args) {
 //        1. Реализовать алгоритм сортировки списков слиянием
-        ArrayList<Integer> randomIntList = createRndIntList(10, 100);
+        ArrayList<Integer> list = createRndIntList(10, 100);
         System.out.println("Исходный список случайных чисел:");
-        System.out.println(randomIntList);
-        MergeSort(randomIntList);
+        System.out.println(list);
+        MergeSort(list);
         System.out.println("Список отсортированный слиянием:");
-        System.out.println(randomIntList);
+        System.out.println(list);
 
 //        2. Пусть дан произвольный список целых чисел, удалить из него чётные числа
-        randomIntList = createRndIntList(10, 100);
-        System.out.println("Исходный список случайных чисел:");
-        System.out.println(randomIntList);
-        randomIntList = removeEvenNumbers(randomIntList);
+        list = createRndIntList(10, 100);
+        System.out.println("\nИсходный список случайных чисел:");
+        System.out.println(list);
+        list = removeEvenNumbers(list);
         System.out.println("Список без чётных чисел:");
-        System.out.println(randomIntList);
+        System.out.println(list);
 
 //        3. Задан целочисленный список ArrayList. Найти минимальное, максимальное и среднее из этого списка.
-        randomIntList = createRndIntList(10, 100);
+        list = createRndIntList(10, 100);
         System.out.println("\nЦелочисленный список: ");
-        showMaxMinMedianOfList(randomIntList);
+        showMaxMinMedianOfList(list);
 
 //        4. Дано два целочисленных списка, объеденить их не допуская элементы второго списка уже встречающиеся в первом.
         System.out.println();
@@ -48,7 +47,8 @@ public class HomeWork03 {
             arrayListOfZeroes.add(0, 0);
         }
         long endArrayList = System.currentTimeMillis();
-        System.out.println("\nРабота ArrayList: " + (endArrayList - beginArrayList));
+        long timeArrayList = endArrayList - beginArrayList;
+        System.out.println("\nРабота ArrayList: " + timeArrayList);
 
 //        6. Повторить пятый пункт но с LinkedList.
         LinkedList<Integer> linkedListOfZeroes = new LinkedList<>();
@@ -57,13 +57,18 @@ public class HomeWork03 {
             linkedListOfZeroes.add(0, 0);
         }
         long endLinkedList = System.currentTimeMillis();
-        System.out.println("\nРабота LinkedList: " + (endLinkedList - beginLinkedList));
+        long timeLinkedList = endLinkedList - beginLinkedList;
+        System.out.println("Работа LinkedList: " + timeLinkedList);
 
 //        7. Сравнить время работы пятого и шестого пунктов.
+        if (timeLinkedList < timeArrayList) {
+            System.out.println("\nОпределённо, связанные списки проворней вставляют значения чем списки простые.");
+        } else {
+            System.out.println("Не велика разница.");
+        }
     }
 
     private static ArrayList<Integer> MergeSort(ArrayList<Integer> list) {
-
         if (list.size() <= 1) {
             return list;
         }
@@ -72,27 +77,27 @@ public class HomeWork03 {
         ArrayList<Integer> right = new ArrayList<>(list.subList(middle, list.size()));
         MergeSort(left);
         MergeSort(right);
-
         int i = 0, j = 0, k = 0;
-        while (i < left.size() & j < right.size()) {
+        while (i < left.size() && j < right.size()) {
             if (left.get(i) < right.get(j)) {
                 list.set(k, left.get(i));
-                i = i + 1;
+                i += 1;
             } else {
                 list.set(k, right.get(j));
-                j = j + 1;
+                j += 1;
             }
-            k = k + 1;
+            k += 1;
+
         }
-        while (i < left.size()){
+        while (i < left.size()) {
             list.set(k, left.get(i));
-            i = i + 1;
-            k = k + 1;
+            i += 1;
+            k += 1;
         }
-        while (i < right.size()){
+        while (j < right.size()) {
             list.set(k, right.get(j));
-            j = j + 1;
-            k = k + 1;
+            j += 1;
+            k += 1;
         }
         return list;
     }
@@ -116,14 +121,15 @@ public class HomeWork03 {
 
     private static void showMaxMinMedianOfList(ArrayList<Integer> list) {
         System.out.println(list);
-        list.sort(new Comparator<Integer>() {
-            @Override
-            public int compare(Integer o1, Integer o2) {
-                return o1 - o2;
-            }
-        });
+//        list.sort(new Comparator<Integer>() {
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return o1 - o2;
+//            }
+//        });
+        list = MergeSort(list);
 
-        System.out.println("Его минимльное значение: "
+        System.out.println("Его минимальное значение: "
                 + list.get(0));
         System.out.println("Максимальное значение: "
                 + list.get(list.size() - 1));
