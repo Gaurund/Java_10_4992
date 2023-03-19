@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Random;
 
@@ -121,13 +122,12 @@ public class HomeWork03 {
 
     private static void showMaxMinMedianOfList(ArrayList<Integer> list) {
         System.out.println(list);
-//        list.sort(new Comparator<Integer>() {
-//            @Override
-//            public int compare(Integer o1, Integer o2) {
-//                return o1 - o2;
-//            }
-//        });
-        list = MergeSort(list);
+        list.sort(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer o1, Integer o2) {
+                return o1 - o2;
+            }
+        });
 
         System.out.println("Его минимальное значение: "
                 + list.get(0));
