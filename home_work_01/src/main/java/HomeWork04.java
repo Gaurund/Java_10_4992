@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -84,88 +85,70 @@ public class HomeWork04 {
     }
 
     private static void printContact(int i) {
-        System.out.print(
+        System.out.println(
                 namesList.get(i)[0] + " " +
-                        namesList.get(i)[1].toUpperCase().charAt(0) + "." +
-                        namesList.get(i)[2].toUpperCase().charAt(0) + ". " +
-                        yearList.get(i) + " " +
-                        gender[genderList.get(i)] + "\n"
+                namesList.get(i)[1].toUpperCase().charAt(0) + "." +
+                namesList.get(i)[2].toUpperCase().charAt(0) + ". " +
+                yearList.get(i) + " " +
+                gender[genderList.get(i)]
         );
     }
 
     private static void printContacts() {
+        System.out.println("Список контактов без сортировки:\n");
         for (int i = 0; i < namesList.size(); i++) {
             printContact(i);
         }
         System.out.println();
     }
 
-    private static void sortByYear() {
-        int[] sorted = new int[yearList.size()];
-        for (int i = 0; i < sorted.length; i++) {
-            sorted[i] = i;
-        }
-        for (int i = 0; i < yearList.size() - 1; i++) {
-            for (int j = 0; j < yearList.size() - i - 1; j++) {
-                if (yearList.get(j) > yearList.get(j + 1)) {
-                    int temp = sorted[j];
-                    sorted[j] = sorted[j + 1];
-                    sorted[j + 1] = temp;
-                }
-            }
-        }
-        for (int i = 0; i < sorted.length; i++) {
-            printContact(sorted[i]);
+    private static void printContactsSorted(int[] sorted) {
+        for (int j : sorted) {
+            printContact(j);
         }
         System.out.println();
+    }
+
+    private static int[] arrayFilledStraight(int size) {
+        int[] array = new int[size];
+        for (int i = 0; i < size; i++) {
+            array[i] = i;
+        }
+        return array;
+    }
+
+    private static void sortByYear() {
+        int[] sorted = arrayFilledStraight(yearList.size());
+        sortInt(sorted, yearList);
+        System.out.println("Список контактов по возрасту:\n");
+        printContactsSorted(sorted);
     }
 
     private static void sortByGender() {
-        int[] sorted = new int[genderList.size()];
-        for (int i = 0; i < sorted.length; i++) {
-            sorted[i] = i;
-        }
-        for (int i = 0; i < genderList.size() - 1; i++) {
-            for (int j = 0; j < genderList.size() - i - 1; j++) {
-                if (genderList.get(j) > genderList.get(j + 1)) {
-                    int temp = sorted[j];
-                    sorted[j] = sorted[j + 1];
-                    sorted[j + 1] = temp;
-                }
-            }
-        }
-        for (int i = 0; i < sorted.length; i++) {
-            printContact(sorted[i]);
-        }
-        System.out.println();
+        int[] sorted = arrayFilledStraight(yearList.size());
+        sortInt(sorted, genderList);
+        System.out.println("Список контактов по половой принадлежности:\n");
+        printContactsSorted(sorted);
     }
 
     private static void sortByYearAndGender() {
-        int[] sorted = new int[genderList.size()];
-        for (int i = 0; i < sorted.length; i++) {
-            sorted[i] = i;
+        int[] sorted = arrayFilledStraight(yearList.size());
+        for (LinkedList<Integer> integers : Arrays.asList(yearList, genderList)) {
+            sortInt(sorted, integers);
         }
-        for (int i = 0; i < yearList.size() - 1; i++) {
-            for (int j = 0; j < yearList.size() - i - 1; j++) {
-                if (yearList.get(j) > yearList.get(j + 1)) {
+        System.out.println("Список контактов сортированный по возрасту и полу:\n");
+        printContactsSorted(sorted);
+    }
+
+    private static void sortInt(int[] sorted, LinkedList<Integer> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = 0; j < list.size() - i - 1; j++) {
+                if (list.get(j) > list.get(j + 1)) {
                     int temp = sorted[j];
                     sorted[j] = sorted[j + 1];
                     sorted[j + 1] = temp;
                 }
             }
         }
-        for (int i = 0; i < genderList.size() - 1; i++) {
-            for (int j = 0; j < genderList.size() - i - 1; j++) {
-                if (genderList.get(j) > genderList.get(j + 1)) {
-                    int temp = sorted[j];
-                    sorted[j] = sorted[j + 1];
-                    sorted[j + 1] = temp;
-                }
-            }
-        }
-        for (int i = 0; i < sorted.length; i++) {
-            printContact(sorted[i]);
-        }
-        System.out.println();
     }
 }
