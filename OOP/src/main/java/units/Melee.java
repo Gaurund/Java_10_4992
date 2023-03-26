@@ -1,6 +1,6 @@
 package units;
 
-public class Melee extends BaseHero {
+public abstract class Melee extends BaseHero {
     int rage;
     int maxRage;
 

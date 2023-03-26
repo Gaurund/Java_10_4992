@@ -1,6 +1,6 @@
 package units;
 
-public class Healer extends BaseHero{
+public abstract class Healer extends BaseHero{
     int mana;
     int maxMana;
     int range;
