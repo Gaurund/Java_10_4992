@@ -35,7 +35,7 @@ public abstract class BaseHero implements GameInterface {
 
     @Override
     public String getInfo() {
-        return className;
+        return className.toLowerCase();
     }
 
 }
