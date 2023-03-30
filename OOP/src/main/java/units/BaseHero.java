@@ -1,6 +1,6 @@
 package units;
 
-public abstract class BaseHero {
+public abstract class BaseHero implements GameInterface {
     public String name;
     protected String className;
     protected int x, y;
@@ -26,6 +26,16 @@ public abstract class BaseHero {
     @Override
     public String toString() {
         return className + " " + name + ", x=" + x + ", y=" + y;
+    }
+
+    @Override
+    public void step() {
+
+    }
+
+    @Override
+    public String getInfo() {
+        return null;
     }
 
 }

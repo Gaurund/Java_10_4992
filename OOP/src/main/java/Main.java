@@ -1,6 +1,7 @@
 import units.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,5 +16,11 @@ public class Main {
         heroes.add(new Peasant("Дэни", 10,2,8));
 
         heroes.forEach(System.out::println);
+
+
+    }
+
+    private static String getName(){
+        return Names.values()[new Random().nextInt(Names.values().length-1)].toString();
     }
 }
