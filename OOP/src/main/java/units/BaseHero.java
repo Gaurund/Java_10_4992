@@ -10,12 +10,12 @@ public abstract class BaseHero implements GameInterface {
     protected int defense;
     protected int[] damage;
 
-    public BaseHero(String className, String name, int x, int y, int initiative, float health, int attack, int defense, int[] damage) {
+    public BaseHero(String className, String name, int x, int y, float health, int attack, int defense, int[] damage) {
         this.className = className;
         this.name = name;
         this.x = x;
         this.y = y;
-        this.initiative = initiative;
+//        this.initiative = initiative;
         this.health = health;
         this.maxHealth = health;
         this.attack = attack;
@@ -35,7 +35,7 @@ public abstract class BaseHero implements GameInterface {
 
     @Override
     public String getInfo() {
-        return null;
+        return className;
     }
 
 }

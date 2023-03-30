@@ -5,22 +5,59 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        ArrayList<BaseHero> heroes = new ArrayList<>();
-        heroes.add(new Archer("Мильва", 1, 6, 1));
-        heroes.add(new Crossbowman("Дейкстра", 10, 3, 2));
-        heroes.add(new Monk("Риен", 1, 8, 3));
-        heroes.add(new Mage("Вильгефорц", 10, 5,4));
-        heroes.add(new Rogue("Геральт", 1,5,5));
-        heroes.add(new Lancer("Кахир", 10,7,6));
-        heroes.add(new Peasant("Лютик", 1,7,7));
-        heroes.add(new Peasant("Дэни", 10,2,8));
 
-        heroes.forEach(System.out::println);
+        ArrayList<BaseHero> whites = new ArrayList<>();
+        ArrayList<BaseHero> blacks = new ArrayList<>();
+        FillHeroes(whites, 1);
+        FillHeroes(blacks, 10);
 
+        System.out.println("Команда белых:");
+        whites.forEach(System.out::println);
+
+        System.out.println("\nКоманда черных:");
+        blacks.forEach(System.out::println);
+
+        System.out.println("\nДемонстрация работы getInfo");
+        blacks.forEach(e -> System.out.println(e.name + " — " + e.getInfo()));
+
+
+//        SpellBook spell = SpellBook.values()[new Random().nextInt(Names.values().length)];
+//        if (spell.getPower() == Float.NaN) {
+//
+//        }
 
     }
 
-    private static String getName(){
-        return Names.values()[new Random().nextInt(Names.values().length-1)].toString();
+    private static String getName() {
+        return Names.values()[new Random().nextInt(Names.values().length)].toString();
+    }
+
+
+    private static void FillHeroes(ArrayList<BaseHero> list, int shift) {
+        Random rnd = new Random();
+        for (int y = 1; y < 11; y++) {
+            switch (rnd.nextInt(4) + shift) {
+                case 1:
+                    list.add(new Archer(getName(), shift, y));
+                    break;
+                case 2:
+                    list.add(new Monk(getName(), shift, y));
+                    break;
+                case 3:
+                    list.add(new Rogue(getName(), shift, y));
+                    break;
+                case 10:
+                    list.add(new Crossbowman(getName(), shift, y));
+                    break;
+                case 11:
+                    list.add(new Mage(getName(), shift, y));
+                    break;
+                case 12:
+                    list.add(new Lancer(getName(), shift, y));
+                    break;
+                default:
+                    list.add(new Peasant(getName(), shift, y));
+            }
+        }
     }
 }
