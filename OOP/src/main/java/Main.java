@@ -29,10 +29,16 @@ public class Main {
     }
 
     private static String getName() {
-        return Names.values()[new Random().nextInt(Names.values().length)].toString();
+        return nameGen();//Names.values()[new Random().nextInt(Names.values().length)].toString();
     }
 
-
+    public static String nameGen(){
+        Random rnd = new Random();
+        StringBuilder name = new StringBuilder();
+        name.append(firstSyl.values()[new Random().nextInt(firstSyl.values().length)].toString());
+        name.append(lastSyl.values()[new Random().nextInt(firstSyl.values().length)].toString());
+        return name.toString();
+    }
     private static void FillHeroes(ArrayList<BaseHero> list, int shift) {
         Random rnd = new Random();
         for (int y = 1; y < 11; y++) {
