@@ -1,20 +1,26 @@
 package units;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public abstract class BaseHero implements GameInterface {
     public String name;
     protected String className;
     protected int x, y;
-    protected int initiative;
+    //    protected int initiative;
     protected float health, maxHealth;
     protected int attack;
     protected int defense;
     protected int[] damage;
 
+    protected Position position;
+
     public BaseHero(String className, String name, int x, int y, float health, int attack, int defense, int[] damage) {
         this.className = className;
         this.name = name;
-        this.x = x;
-        this.y = y;
+        this.position = new Position(x, y);
+//        this.x = x;
+//        this.y = y;
 //        this.initiative = initiative;
         this.health = health;
         this.maxHealth = health;
@@ -25,6 +31,8 @@ public abstract class BaseHero implements GameInterface {
 
     @Override
     public String toString() {
+        x = this.position.getHeroX();
+        y = this.position.getHeroY();
         return className + " " + name + ", x=" + x + ", y=" + y;
     }
 
@@ -34,8 +42,40 @@ public abstract class BaseHero implements GameInterface {
     }
 
     @Override
+    public Position getPosition() {
+        return position;
+    }
+
+    @Override
     public String getInfo() {
         return className.toLowerCase();
     }
 
+
+    public Float getHealth() {
+        return this.health;
+    }
+
+    public BaseHero nearestEnemy(ArrayList<BaseHero> enemyList) {
+        double minDistance = 10;
+        BaseHero enemy = null;
+        for (BaseHero e : enemyList) {
+            if (e.getHealth() < 0) continue;
+            if (minDistance > this.getPosition().getDistance(e.getPosition())) {
+                minDistance = this.getPosition().getDistance(e.getPosition());
+                enemy = e;
+            }
+
+        }
+        return enemy;
+    }
+
+    public BaseHero whoIs(ArrayList<BaseHero> list){
+        BaseHero enemy = list.get(new Random().nextInt(list.size()));
+        return enemy;
+    }
+
+    public void setHealth(float health) {
+        this.health = health;
+    }
 }
