@@ -1,5 +1,7 @@
 package units;
 
+import java.util.ArrayList;
+
 public abstract class Melee extends BaseHero {
     int rage;
     int maxRage;
@@ -9,4 +11,6 @@ public abstract class Melee extends BaseHero {
         this.rage = rage;
         this.maxRage = maxRage;
     }
+    public void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList){};
+
 }

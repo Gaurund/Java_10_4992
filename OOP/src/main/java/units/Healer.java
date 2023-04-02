@@ -1,5 +1,7 @@
 package units;
 
+import java.util.ArrayList;
+
 public abstract class Healer extends BaseHero{
     int mana;
     int maxMana;
@@ -12,4 +14,7 @@ public abstract class Healer extends BaseHero{
         this.range = range;
         this.restoreHealth = restoreHealth;
     }
+
+    public void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList){};
+
 }

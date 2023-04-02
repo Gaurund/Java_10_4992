@@ -31,15 +31,11 @@ public abstract class BaseHero implements GameInterface {
 
     @Override
     public String toString() {
-        x = this.position.getHeroX();
-        y = this.position.getHeroY();
+        x = this.position.getX();
+        y = this.position.getY();
         return className + " " + name + ", x=" + x + ", y=" + y;
     }
 
-    @Override
-    public void step() {
-
-    }
 
     @Override
     public Position getPosition() {
@@ -70,10 +66,6 @@ public abstract class BaseHero implements GameInterface {
         return enemy;
     }
 
-    public BaseHero whoIs(ArrayList<BaseHero> list){
-        BaseHero enemy = list.get(new Random().nextInt(list.size()));
-        return enemy;
-    }
 
     public void setHealth(float health) {
         this.health = health;

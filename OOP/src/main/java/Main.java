@@ -17,23 +17,24 @@ public class Main {
         System.out.println("\nКоманда черных:");
         blacks.forEach(System.out::println);
 
-        blacks.get(0).setHealth(-1);
-        System.out.println("\nБлижайший к персонажу противник: "+whites.get(0).nearestEnemy(blacks));
+//        blacks.get(0).setHealth(-1); //  Убиваем первого перса в команде "чёрных" ради интересного результата.
+//        BaseHero temp = whites.get(0).nearestEnemy(blacks);
+//        System.out.println("\nБлижайший к персонажу " + whites.get(0) + " противник: " + temp + " на дистанции " + whites.get(0).getPosition().getDistance(temp.getPosition()));
 
 
-//        System.out.println("\nДемонстрация работы getInfo");
-//        blacks.forEach(e -> System.out.println(e.name + " — " + e.getInfo()));
+//        SpellBook spell = SpellBook.values()[new Random().nextInt(SpellBook.values().length)];
+//        if (spell.getPower() == Float.NaN) {
+//
+//        }
 
-
-        SpellBook spell = SpellBook.values()[new Random().nextInt(SpellBook.values().length)];
-        if (spell.getPower() == Float.NaN) {
-
+        System.out.println("\nЛучники и их ближайшие противники:");
+        for (BaseHero e: whites) {
+            if (e instanceof Archer){
+                System.out.println(e);
+                e.step(blacks, whites);
+            }
         }
 
-        BaseHero whiteArcher = new Archer("Белый",1,1);
-        BaseHero blackXbowman = new Crossbowman("Чёрный", 5,2);
-//        System.out.println(whiteArcher.nearestEnemy(blacks));
-//        System.out.println(blackXbowman);
 
 //        System.out.println("Работа position: ");
 //        System.out.println(whiteArcher.name + " " + whiteArcher.getPosition().toString());
@@ -46,14 +47,12 @@ public class Main {
         return nameGen();//Names.values()[new Random().nextInt(Names.values().length)].toString();
     }
 
-    public static String nameGen(){
-        Random rnd = new Random();
-        StringBuilder name = new StringBuilder();
-        name.append(firstSyl.values()[new Random().nextInt(firstSyl.values().length)].toString());
-        name.append(midSyl.values()[new Random().nextInt(midSyl.values().length)].toString());
-        name.append(lastSyl.values()[new Random().nextInt(lastSyl.values().length)].toString());
-        return name.toString();
+    public static String nameGen() {
+        return firstSyl.values()[new Random().nextInt(firstSyl.values().length)].toString() +
+                midSyl.values()[new Random().nextInt(midSyl.values().length)].toString() +
+                lastSyl.values()[new Random().nextInt(lastSyl.values().length)].toString();
     }
+
     private static void FillHeroes(ArrayList<BaseHero> list, int shift) {
         Random rnd = new Random();
         for (int y = 1; y < 11; y++) {

@@ -8,11 +8,11 @@ public class Position {
         this.heroY = heroY;
     }
 
-    public int getHeroX() {
+    public int getX() {
         return heroX;
     }
 
-    public int getHeroY() {
+    public int getY() {
         return heroY;
     }
 
@@ -25,8 +25,32 @@ public class Position {
     }
 
     public double getDistance(Position enemyPosition){
-        int enemyX = enemyPosition.getHeroX();
-        int enemyY = enemyPosition.getHeroY();
+        int enemyX = enemyPosition.getX();
+        int enemyY = enemyPosition.getY();
         return Math.sqrt(((this.heroX - enemyX) * (this.heroX - enemyX)) + ((this.heroY - enemyY) * (this.heroY - enemyY)));
+    }
+
+    public Boolean move(String move){
+        int HIGH_LIMIT = 10;
+        int LOW_LIMIT = 1;
+        switch (move){
+            case "влево":
+                if (this.heroX == LOW_LIMIT) return false;
+                heroX -= 1;
+                return true;
+            case "вправо":
+                if (this.heroX == HIGH_LIMIT)  return false;
+                heroX += 1;
+                return true;
+            case "вверх":
+                if (this.heroY == LOW_LIMIT)  return false;
+                heroY -= 1;
+                return true;
+            case "вниз":
+                if (this.heroY == HIGH_LIMIT)  return false;
+                heroY += 1;
+                return true;
+        }
+        return null; // Без этой "заглушки" компилятор выдаёт ошибку.
     }
 }

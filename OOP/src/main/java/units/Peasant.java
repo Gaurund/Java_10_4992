@@ -1,5 +1,7 @@
 package units;
 
+import java.util.ArrayList;
+
 public final class Peasant extends BaseHero{
     public static final String className = "Крестьянин";
     int load;
@@ -9,6 +11,8 @@ public final class Peasant extends BaseHero{
         this.load = 3;
         this.capacity = 3;
     }
+    public void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList){};
+
 //    @Override
 //    public String getInfo() {
 //        return "Я крестьянин";
