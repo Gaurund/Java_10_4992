@@ -1,61 +1,71 @@
 package units;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-/**
- * Проверить живой ли он?
- * Проверить есть ли стрелы?
- * Если стрелы есть и он живой, тогда найти ближайшего противника и выстрелить в него.
- * После выстрела, проверить есть ли свой крестьянин? Если есть, то просто завершить работу.
- * Если нет, то количество стрел уменьшить на один.
- */
 public abstract class Ranged extends BaseHero {
     int arrows, maxArrows;
     int accuracy;
 
-    public Ranged(String className, String name, int x, int y, float health, int attack, int defense, int[] damage, int arrows, int accuracy) {
-        super(className, name, x, y, health, attack, defense, damage);
-        this.arrows = arrows;
+    public Ranged(String className, String name, int sideID, int x, int y, float health, int attack, int defense, int[] damage, int priority, int arrows, int accuracy) {
+        super(className, name, sideID, x, y, health, attack, defense, damage, priority);
+        this.arrows = 1;
         this.maxArrows = arrows;
         this.accuracy = accuracy;
     }
 
-    protected void shoot() {
-        System.out.println("Shoot!");
+    protected void shoot(BaseHero enemy) {
+        Random chance = new Random();
+        if (chance.nextInt(101) < accuracy) {
+            float damage = (attack - enemy.getDefense());
+            damage = damage / 10;
+            enemy.setHealth(enemy.getHealth() - damage);
+            arrows = arrows - 1;
+            System.out.println(enemy.name + " получает урон " + damage);
+            if (enemy.getHealth() <= 0) enemy.getState().changeState(0);
+            System.out.println(enemy);
+        } else {
+            System.out.println("Стрела прошла мимо!");
+        }
     }
 
     protected boolean isDead() {
-        return this.health <= 0;
+        return state.getStateID() == 0;
     }
 
-    protected boolean isEmpty() {
-        return this.arrows <= 0;
+    protected boolean isNotEmpty() {
+        return arrows > 0;
     }
 
-    protected boolean isPeasantExisted(ArrayList<BaseHero> teamList) {
+    protected BaseHero isPeasantExisted(ArrayList<BaseHero> teamList) {
         for (BaseHero e : teamList) {
-            if (e instanceof Peasant) return true;
+            if ((e instanceof Peasant) && (e.getState().getStateID() == 1)) {
+                return e;
+            }
         }
-        return false;
+        return null;
     }
 
     @Override
-    public void step (ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList) {
+    public void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList) {
         if (isDead()) {
-            System.out.println("Стрелок скорее мёртв, чем жив.");
             return;
         }
-        if (isEmpty()) {
-            if (isPeasantExisted(teamList)) {
-                System.out.println("Пополняем боеприпасы.");
+
+        if (isNotEmpty()) {
+            BaseHero nearestEnemy = nearestEnemy(enemyList);
+            System.out.println("Цель: " + nearestEnemy);
+            shoot(nearestEnemy);
+            BaseHero peasant = isPeasantExisted(teamList);
+            if (peasant != null) {
+                System.out.println("Пополняем боеприпасы посредством крестьянина " + peasant.name);
                 this.arrows = this.maxArrows;
+                peasant.getState().changeState(2);
+                System.out.println("Теперь крестьянин " + peasant.name + " " + peasant.state.getStateName());
             } else {
-                System.out.println("Это конец. Стрел уже не будет.");
-                return;
+                System.out.println("Не осталось свободных крестьян.");
             }
         }
-        BaseHero nearestEnemy = nearestEnemy(enemyList);
-        System.out.println(nearestEnemy);
-        System.out.println("Стреляем в него и вычисляем урон.");
+        System.out.println();
     }
 }

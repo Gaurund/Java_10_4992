@@ -1,4 +1,4 @@
-package units;
+package units.Obsolete;
 
 public enum SpellBook {
     healOne(1,-1), healFive(2,-5), healTen(3,-10),

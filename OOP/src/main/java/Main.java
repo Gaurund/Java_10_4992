@@ -1,15 +1,30 @@
 import units.*;
+import units.Mage;
+import units.Monk;
+import units.Lancer;
+import units.Rogue;
+import units.NameGenerator.firstSyl;
+import units.NameGenerator.lastSyl;
+import units.NameGenerator.midSyl;
+import units.Archer;
+import units.Crossbowman;
+import units.Peasant;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class Main {
+
+    static Scanner myScanner = new Scanner(System.in);
+
     public static void main(String[] args) {
 
         ArrayList<BaseHero> whites = new ArrayList<>();
         ArrayList<BaseHero> blacks = new ArrayList<>();
         FillHeroes(whites, 1);
         FillHeroes(blacks, 10);
+        ArrayList<BaseHero> armies = new ArrayList<>();
+        armies.addAll(whites);
+        armies.addAll(blacks);
 
         System.out.println("Команда белых:");
         whites.forEach(System.out::println);
@@ -17,30 +32,30 @@ public class Main {
         System.out.println("\nКоманда черных:");
         blacks.forEach(System.out::println);
 
-//        blacks.get(0).setHealth(-1); //  Убиваем первого перса в команде "чёрных" ради интересного результата.
-//        BaseHero temp = whites.get(0).nearestEnemy(blacks);
-//        System.out.println("\nБлижайший к персонажу " + whites.get(0) + " противник: " + temp + " на дистанции " + whites.get(0).getPosition().getDistance(temp.getPosition()));
+        do {
+            armies.sort(new Comparator<BaseHero>() {
+                @Override
+                public int compare(BaseHero o1, BaseHero o2) {
+                    return o1.getPriority() - o2.getPriority();
+                }
+            });
 
+            System.out.println("\nВсе команды:");
+            armies.forEach(System.out::println);
 
-//        SpellBook spell = SpellBook.values()[new Random().nextInt(SpellBook.values().length)];
-//        if (spell.getPower() == Float.NaN) {
-//
-//        }
-
-        System.out.println("\nЛучники и их ближайшие противники:");
-        for (BaseHero e: whites) {
-            if (e instanceof Archer){
-                System.out.println(e);
-                e.step(blacks, whites);
+            System.out.println("\nБой начался:");
+            for (BaseHero hero: armies ) {
+                System.out.println(hero);
+                if(hero.getSideID()==0){
+                    hero.step(blacks,whites);
+                }else {
+                    hero.step(whites, blacks);
+                }
             }
+
+            armies.forEach(BaseHero::upkeep);
         }
-
-
-//        System.out.println("Работа position: ");
-//        System.out.println(whiteArcher.name + " " + whiteArcher.getPosition().toString());
-//        System.out.println(blackXbowman.name + " " + blackXbowman.getPosition().toString());
-//        System.out.println(whiteArcher.getPosition().getDistance(blackXbowman.getPosition()));
-
+        while (Objects.equals(myScanner.nextLine(), ""));
     }
 
     private static String getName() {
@@ -66,6 +81,9 @@ public class Main {
                 case 3:
                     list.add(new Rogue(getName(), shift, y));
                     break;
+                case 4:
+                    list.add(new Peasant(getName(), 0, shift, y));
+                    break;
                 case 10:
                     list.add(new Crossbowman(getName(), shift, y));
                     break;
@@ -76,7 +94,7 @@ public class Main {
                     list.add(new Lancer(getName(), shift, y));
                     break;
                 default:
-                    list.add(new Peasant(getName(), shift, y));
+                    list.add(new Peasant(getName(), 1, shift, y));
             }
         }
     }

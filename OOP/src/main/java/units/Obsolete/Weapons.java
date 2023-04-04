@@ -1,4 +1,4 @@
-package units;
+package units.Obsolete;
 
 public class Weapons {
     protected String name;
