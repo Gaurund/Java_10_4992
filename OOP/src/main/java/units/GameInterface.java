@@ -15,4 +15,11 @@ public interface GameInterface {
     Position getPosition();
     String getInfo();
 
+    int getArrows();
+
+    int getMaxArrows();
+
+    void setArrows();
+
+    void setPlusOneArrow();
 }

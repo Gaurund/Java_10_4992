@@ -2,9 +2,6 @@ package units;
 
 import java.util.ArrayList;
 
-/**
- * Один крестьянин за ход обслуживает только одного стрелка.
- */
 public final class Peasant extends BaseHero {
     public static final String className = "Крестьянин";
     int load;
@@ -16,11 +13,30 @@ public final class Peasant extends BaseHero {
         this.capacity = 3;
     }
 
-
-    public void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList) {
+    private BaseHero isRangedExisted(ArrayList<BaseHero> teamList) {
+        for (BaseHero e : teamList) {
+            if (e instanceof Ranged && e.getState().getStateID() == 1 && e.getArrows() != e.getMaxArrows()) {
+                return e;
+            }
+        }
+        return null;
     }
 
-    //    @Override
+    public void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList) {
+        if (isDead()) {
+            return;
+        }
+        BaseHero ranged = isRangedExisted(teamList);
+        if (ranged != null) {
+            System.out.print("Пополняем боеприпасы посредством крестьянина " + name + " стрелку " + ranged.name + " Было: ");
+            ranged.getState().changeState(2);
+            System.out.print(ranged.getArrows());
+            ranged.setPlusOneArrow();
+            System.out.print(", стало: " + ranged.getArrows() + "\n");
+        }
+    }
+
+//    @Override
 //    public String getInfo() {
 //        return "Я крестьянин";
 //    }

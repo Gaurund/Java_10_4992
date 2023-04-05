@@ -44,12 +44,12 @@ public class Main {
             armies.forEach(System.out::println);
 
             System.out.println("\nБой начался:");
-            for (BaseHero hero: armies ) {
-                System.out.println(hero);
-                if(hero.getSideID()==0){
-                    hero.step(blacks,whites);
+            for (BaseHero e: armies ) {
+                System.out.println(e);
+                if(e.getSideID()==0){
+                    e.step(blacks,whites);
                 }else {
-                    hero.step(whites, blacks);
+                    e.step(whites, blacks);
                 }
             }
 

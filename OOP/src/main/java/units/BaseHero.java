@@ -59,6 +59,10 @@ public abstract class BaseHero implements GameInterface {
         return state;
     }
 
+    protected boolean isDead() {
+        return state.getStateID() == 0;
+    }
+
     public Float getHealth() {
         return health;
     }
@@ -71,16 +75,21 @@ public abstract class BaseHero implements GameInterface {
         return defense;
     }
 
+    public int getArrows(){return 0;}
+
+    public int getMaxArrows(){return 0;}
     @Override
     public String getInfo() {
         return className.toLowerCase();
     }
 
+    public void setArrows() {};
+
+    public void setPlusOneArrow() {};
+
     public void upkeep() {
         if (state.getStateID() > 0) {
-//            System.out.println("Check 1: " + name + " --> " + state.getStateID());
             state.changeState(1);
-//            System.out.println("Check 2: " + name + " --> " + state.getStateID());
         }
     }
 
