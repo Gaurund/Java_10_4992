@@ -18,7 +18,7 @@ public abstract class Ranged extends BaseHero {
         Random chance = new Random();
         arrows = arrows - 1;
         if (chance.nextInt(101) < accuracy) {
-            float damage = (attack - enemy.getDefense());
+            float damage = (attack - enemy.getDefense()) + (new Random().nextInt(this.damage[1]-this.damage[0])+this.damage[0]);
             damage = damage / 10;
             enemy.setHealth(enemy.getHealth() - damage);
             System.out.println(enemy.name + " получает урон " + damage);
