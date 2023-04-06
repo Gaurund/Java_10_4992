@@ -3,7 +3,8 @@ package units;
 import java.util.ArrayList;
 
 public interface GameInterface {
-    void step(ArrayList<BaseHero> armies);
+    boolean isDead(BaseHero hero);
+    void step(ArrayList<BaseHero> armies, Score score);
 
     void upkeep();
 

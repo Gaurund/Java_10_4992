@@ -15,21 +15,22 @@ public final class Peasant extends BaseHero {
 
     private BaseHero isRangedExisted(ArrayList<BaseHero> armies) {
         for (BaseHero e : armies) {
-            if (e instanceof Ranged && e.getState().getStateID() == 1 && e.getArrows() != e.getMaxArrows() && !isEnemy(e)) {
-                System.out.println(e + " должен получить стрелы от " + this.name);
+            if (e instanceof Ranged && !isEnemy(e) && e.getState().getStateID() == 1 && e.getArrows() != e.getMaxArrows()) {
+//                System.out.println(e.className + " " + e.name + " должен получить стрелы от " + this.name);
                 return e;
             }
         }
         return null;
     }
 
-    public void step(ArrayList<BaseHero> armies) {
-        if (isDead()) {
+
+    public void step(ArrayList<BaseHero> armies, Score score) {
+        if (isDead(this)) {
             return;
         }
         BaseHero ranged = isRangedExisted(armies);
         if (ranged != null) {
-            System.out.print("Пополняем боеприпасы посредством крестьянина " + name + " стрелку " + ranged.name + ". Было: ");
+            System.out.print(" - Пополняем боеприпасы посредством крестьянина " + name + " стрелку " + ranged.name + ". Было: ");
             ranged.getState().changeState(2);
             System.out.print(ranged.getArrows());
             ranged.setPlusOneArrow();

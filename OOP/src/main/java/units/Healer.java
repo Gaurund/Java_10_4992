@@ -16,7 +16,7 @@ public abstract class Healer extends BaseHero {
         this.restoreHealth = restoreHealth;
     }
 
-    public void step(ArrayList<BaseHero> armies) {
+    public void step(ArrayList<BaseHero> armies, Score score)  {
     }
 
 }

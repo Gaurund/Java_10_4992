@@ -59,8 +59,8 @@ public abstract class BaseHero implements GameInterface {
         return state;
     }
 
-    protected boolean isDead() {
-        return state.getStateID() == 0;
+    public boolean isDead(BaseHero hero) {
+        return hero.getState().getStateID() == 0;
     }
 
     public Float getHealth() {
@@ -101,14 +101,14 @@ public abstract class BaseHero implements GameInterface {
     }
 
     protected boolean isEnemy(BaseHero hero) {
-        return hero.side.getSideID() != side.getSideID();
+        return hero.getSide() != this.getSide();
     }
 
     public BaseHero nearestEnemy(ArrayList<BaseHero> armies) {
         double minDistance = 10;
         BaseHero enemy = null;
         for (BaseHero e : armies) {
-            if (e.getState().getStateID() == 0) continue;
+            if (isDead(e)) continue;
             if (isEnemy(e)) {
                 double estimatedDistance = position.getDistance(e.getPosition());
                 if (minDistance > estimatedDistance) {

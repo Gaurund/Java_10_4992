@@ -12,7 +12,7 @@ public abstract class Melee extends BaseHero {
         this.maxRage = maxRage;
     }
 
-    public void step(ArrayList<BaseHero> armies) {
+    public void step(ArrayList<BaseHero> armies, Score score)  {
     }
 
 

@@ -11,6 +11,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        Score score = new Score();
+        String[] winner = new String[] {"Белых!", "Чёрных!"};
+
         ArrayList<BaseHero> whites = new ArrayList<>();
         ArrayList<BaseHero> blacks = new ArrayList<>();
         FillHeroes(whites, 1);
@@ -19,40 +22,45 @@ public class Main {
         armies.addAll(whites);
         armies.addAll(blacks);
 
-        System.out.println("Команда белых:");
+        System.out.println("\nКоманда белых:");
         whites.forEach(System.out::println);
 
         System.out.println("\nКоманда черных:");
         blacks.forEach(System.out::println);
+        armies.sort(new Comparator<BaseHero>() {
+            @Override
+            public int compare(BaseHero o1, BaseHero o2) {
+                return o1.getPriority() - o2.getPriority();
+            }
+        });
 
         do {
-            armies.sort(new Comparator<BaseHero>() {
-                @Override
-                public int compare(BaseHero o1, BaseHero o2) {
-                    return o1.getPriority() - o2.getPriority();
-                }
-            });
 
             System.out.println("\nВсе команды:");
             armies.forEach(System.out::println);
 
             System.out.println("\nБой начался:");
-
             for (BaseHero e : armies) {
                 System.out.println(e);
-                e.step(armies);
+                e.step(armies, score);
             }
 
+            if(score.checkScore()!= null) break;
+
             armies.forEach(BaseHero::upkeep);
+
+            System.out.println(score);
         }
         while (Objects.equals(myScanner.nextLine(), ""));
+
+        System.out.println("\n\n================================================"+"\nИгра закончена. Победила команда " + winner[score.checkScore()]);
     }
 
     private static String getName() {
         return nameGen();//Names.values()[new Random().nextInt(Names.values().length)].toString();
     }
 
-    public static String nameGen() {
+    private static String nameGen() {
         return firstSyl.values()[new Random().nextInt(firstSyl.values().length)].toString() +
                 midSyl.values()[new Random().nextInt(midSyl.values().length)].toString() +
                 lastSyl.values()[new Random().nextInt(lastSyl.values().length)].toString();

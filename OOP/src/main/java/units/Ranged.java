@@ -14,15 +14,18 @@ public abstract class Ranged extends BaseHero {
         this.accuracy = accuracy;
     }
 
-    protected void shoot(BaseHero enemy) {
+    protected void shoot(BaseHero enemy, Score score) {
         Random chance = new Random();
         arrows = arrows - 1;
         if (chance.nextInt(101) < accuracy) {
             float damage = (attack - enemy.getDefense()) + (new Random().nextInt(this.damage[1] - this.damage[0]) + this.damage[0]);
-            damage = damage / 10;
+//            damage = damage / 10;
             enemy.setHealth(enemy.getHealth() - damage);
             System.out.println(enemy.name + " получает урон " + damage);
-            if (enemy.getHealth() <= 0) enemy.getState().changeState(0);
+            if (enemy.getHealth() <= 0) {
+                enemy.getState().changeState(0);
+                score.decrementScore(enemy.getSide());
+            }
             System.out.println(enemy);
         } else {
             System.out.println("Стрела прошла мимо!");
@@ -44,8 +47,8 @@ public abstract class Ranged extends BaseHero {
     }
 
     @Override
-    public void step(ArrayList<BaseHero> armies) {
-        if (isDead()) {
+    public void step(ArrayList<BaseHero> armies, Score score) {
+        if (isDead(this)) {
             return;
         }
 
@@ -53,11 +56,16 @@ public abstract class Ranged extends BaseHero {
             BaseHero nearestEnemy = nearestEnemy(armies);
             if (nearestEnemy != null) {
                 System.out.println("Цель: " + nearestEnemy);
-                shoot(nearestEnemy);
+                shoot(nearestEnemy, score);
             }
         }
         System.out.println();
 
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " [Стрел: "+arrows+"]";
     }
 
     public int getArrows() {
