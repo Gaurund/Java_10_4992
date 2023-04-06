@@ -1,14 +1,7 @@
 import units.*;
-import units.Mage;
-import units.Monk;
-import units.Lancer;
-import units.Rogue;
 import units.NameGenerator.firstSyl;
 import units.NameGenerator.lastSyl;
 import units.NameGenerator.midSyl;
-import units.Archer;
-import units.Crossbowman;
-import units.Peasant;
 
 import java.util.*;
 
@@ -44,13 +37,10 @@ public class Main {
             armies.forEach(System.out::println);
 
             System.out.println("\nБой начался:");
-            for (BaseHero e: armies ) {
+
+            for (BaseHero e : armies) {
                 System.out.println(e);
-                if(e.getSideID()==0){
-                    e.step(blacks,whites);
-                }else {
-                    e.step(whites, blacks);
-                }
+                e.step(armies);
             }
 
             armies.forEach(BaseHero::upkeep);

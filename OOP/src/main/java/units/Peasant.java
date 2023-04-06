@@ -7,26 +7,27 @@ public final class Peasant extends BaseHero {
     int load;
     int capacity;
 
-    public Peasant(String name, int sideID, int x, int y) {
-        super(className, name, sideID, x, y, 3, 1, 1, new int[]{1, 3}, 50);
+    public Peasant(String name, int side, int x, int y) {
+        super(className, name, side, x, y, 3, 1, 1, new int[]{1, 3}, 50);
         this.load = 3;
         this.capacity = 3;
     }
 
-    private BaseHero isRangedExisted(ArrayList<BaseHero> teamList) {
-        for (BaseHero e : teamList) {
-            if (e instanceof Ranged && e.getState().getStateID() == 1 && e.getArrows() != e.getMaxArrows()) {
+    private BaseHero isRangedExisted(ArrayList<BaseHero> armies) {
+        for (BaseHero e : armies) {
+            if (e instanceof Ranged && e.getState().getStateID() == 1 && e.getArrows() != e.getMaxArrows() && !isEnemy(e)) {
+                System.out.println(e + " должен получить стрелы от " + this.name);
                 return e;
             }
         }
         return null;
     }
 
-    public void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList) {
+    public void step(ArrayList<BaseHero> armies) {
         if (isDead()) {
             return;
         }
-        BaseHero ranged = isRangedExisted(teamList);
+        BaseHero ranged = isRangedExisted(armies);
         if (ranged != null) {
             System.out.print("Пополняем боеприпасы посредством крестьянина " + name + " стрелку " + ranged.name + ". Было: ");
             ranged.getState().changeState(2);

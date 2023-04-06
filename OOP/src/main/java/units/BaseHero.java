@@ -6,7 +6,7 @@ import java.util.Random;
 public abstract class BaseHero implements GameInterface {
     public String name;
     protected String className;
-    protected Side sideID;
+    protected Side side;
     protected int priority;
     protected float health, maxHealth;
     protected int attack;
@@ -15,10 +15,10 @@ public abstract class BaseHero implements GameInterface {
     protected Position position;
     protected State state;
 
-    public BaseHero(String className, String name, int sideID, int x, int y, float health, int attack, int defense, int[] damage, int priority) {
+    public BaseHero(String className, String name, int side, int x, int y, float health, int attack, int defense, int[] damage, int priority) {
         this.className = className;
         this.name = name;
-        this.sideID = new Side(sideID);
+        this.side = new Side(side);
         this.position = new Position(x, y);
         this.priority = randomizePriority(priority);
         this.health = health;
@@ -33,7 +33,7 @@ public abstract class BaseHero implements GameInterface {
     public String toString() {
         int x = this.position.getX();
         int y = this.position.getY();
-        return className + " " + name + " (" + sideID.getSideName() + ") [x=" + x + ", y=" + y + "] ♥:" + this.getHealth() + " состояние: " + state.getStateName();
+        return className + " " + name + " (" + side.getSideName() + ") [x=" + x + ", y=" + y + "] ♥:" + this.getHealth() + " состояние: " + state.getStateName();
     }
 
     private int randomizePriority(int priority) {
@@ -45,8 +45,8 @@ public abstract class BaseHero implements GameInterface {
     }
 
     @Override
-    public int getSideID() {
-        return sideID.getSideID();
+    public int getSide() {
+        return side.getSideID();
     }
 
     @Override
@@ -75,17 +75,24 @@ public abstract class BaseHero implements GameInterface {
         return defense;
     }
 
-    public int getArrows(){return 0;}
+    public int getArrows() {
+        return 0;
+    }
 
-    public int getMaxArrows(){return 0;}
+    public int getMaxArrows() {
+        return 0;
+    }
+
     @Override
     public String getInfo() {
         return className.toLowerCase();
     }
 
-    public void setArrows() {};
+    public void setArrows() {
+    }
 
-    public void setPlusOneArrow() {};
+    public void setPlusOneArrow() {
+    }
 
     public void upkeep() {
         if (state.getStateID() > 0) {
@@ -93,17 +100,24 @@ public abstract class BaseHero implements GameInterface {
         }
     }
 
-    public BaseHero nearestEnemy(ArrayList<BaseHero> enemyList) {
+    protected boolean isEnemy(BaseHero hero) {
+        return hero.side.getSideID() != side.getSideID();
+    }
+
+    public BaseHero nearestEnemy(ArrayList<BaseHero> armies) {
         double minDistance = 10;
         BaseHero enemy = null;
-        for (BaseHero e : enemyList) {
+        for (BaseHero e : armies) {
             if (e.getState().getStateID() == 0) continue;
-            double estimatedDistance = position.getDistance(e.getPosition());
-            if (minDistance > estimatedDistance) {
-                minDistance = estimatedDistance;
-                enemy = e;
+            if (isEnemy(e)) {
+                double estimatedDistance = position.getDistance(e.getPosition());
+                if (minDistance > estimatedDistance) {
+                    minDistance = estimatedDistance;
+                    enemy = e;
+                }
             }
         }
+
         return enemy;
     }
 }

@@ -1,9 +1,10 @@
 package units;
 
-public final class Rogue extends Melee{
+public final class Rogue extends Melee {
     private static final String className = "Разбойник";
-    public Rogue(String name, int x, int y ) {
-        super(className, name, 0, x, y, 9, 15, 5, new int[]{8,14}, 15,0, 3);
+
+    public Rogue(String name, int x, int y) {
+        super(className, name, 0, x, y, 9, 15, 5, new int[]{8, 14}, 15, 0, 3);
 
     }
 //    @Override

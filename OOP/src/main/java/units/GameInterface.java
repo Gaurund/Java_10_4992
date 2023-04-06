@@ -1,18 +1,18 @@
 package units;
 
-import units.BaseHero;
-import units.Position;
-import units.State;
-
 import java.util.ArrayList;
 
 public interface GameInterface {
-    void step(ArrayList<BaseHero> enemyList, ArrayList<BaseHero> teamList);
+    void step(ArrayList<BaseHero> armies);
 
     void upkeep();
-    int getSideID();
+
+    int getSide();
+
     State getState();
+
     Position getPosition();
+
     String getInfo();
 
     int getArrows();

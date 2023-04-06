@@ -1,18 +1,18 @@
 package units;
 
-import java.util.HashMap;
-
 public class Side {
+    private static final String[] sides = new String[]{"Белый", "Чёрный"};
     protected int sideID;
-    private static final String[] sides = new String[] {"Белый","Чёрный"};
-    public Side(int sideID){
-        this.sideID=sideID;
+
+    public Side(int sideID) {
+        this.sideID = sideID;
     }
 
-    public int getSideID(){
+    public int getSideID() {
         return sideID;
     }
-    public String getSideName(){
+
+    public String getSideName() {
         return sides[sideID];
     }
 }
