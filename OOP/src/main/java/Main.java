@@ -16,7 +16,7 @@ public class Main {
 
         createArmies();
         printArmies();
-        sortAmries();
+        sortArmies();
         game();
 
     }
@@ -53,7 +53,7 @@ public class Main {
         System.out.println("\n\n================================================" + "\nИгра закончена. Победила команда " + winner[score.checkScore()]);
     }
 
-    private static void sortAmries() {
+    private static void sortArmies() {
         armies.sort(new Comparator<BaseHero>() {
             @Override
             public int compare(BaseHero o1, BaseHero o2) {
