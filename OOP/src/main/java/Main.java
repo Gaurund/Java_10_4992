@@ -82,7 +82,7 @@ public class Main {
                     list.add(new Crossbowman(getName(), shift, y));
                     break;
                 case 11:
-                    list.add(new Mage(getName(), shift, y));
+                    list.add(new Wizard(getName(), shift, y));
                     break;
                 case 12:
                     list.add(new Lancer(getName(), shift, y));
