@@ -13,7 +13,7 @@ public abstract class Melee extends BaseHero {
     }
 
     public void hit(BaseHero enemy, Score score) {
-        System.out.println("KABOOM!!!");
+        this.inflictDamage(enemy, score);
     }
 
     public void step(ArrayList<BaseHero> armies, Score score) {
@@ -21,15 +21,17 @@ public abstract class Melee extends BaseHero {
             return;
         }
         BaseHero nearestEnemy = nearestEnemy(armies);
+//        System.out.println(this + " >>> Цель: " + nearestEnemy);
+
         if (nearestEnemy != null) {
             if (checkRange(nearestEnemy)) {
-                System.out.println(" >>> Цель: " + nearestEnemy);
                 hit(nearestEnemy, score);
             } else {
+//                System.out.println(this + " ===> " + nearestEnemy);
                 this.getPosition().move(nearestEnemy, armies);
             }
         }
-        System.out.println();
+//        System.out.println();
     }
 
 

@@ -1,20 +1,66 @@
 package units;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public abstract class Healer extends BaseHero {
-    int mana;
-    int maxMana;
+    Mana mana;
     float restoreHealth;
 
     public Healer(String className, String name, int side, int x, int y, float health, double range, int attack, int defense, int[] damage, int priority, float restoreHealth) {
         super(className, name, side, x, y, health, range, attack, defense, damage, priority);
-        this.mana = 100;
-        this.maxMana = mana;
-       this.restoreHealth = restoreHealth;
+        this.mana = new Mana(100);
+        this.restoreHealth = restoreHealth;
     }
 
-    public void step(ArrayList<BaseHero> armies, Score score)  {
+    public void step(ArrayList<BaseHero> armies, Score score) {
+        if (isDead(this)) {
+            return;
+        }
+        ArrayList<BaseHero> wounded = findWounded(armies);
+        if (wounded.size() > 0) {
+            BaseHero mostWounded = findMostWounded(wounded);
+            mostWounded.health.heal(restoreHealth);
+            mana.payMana(10);
+        } else {
+            BaseHero nearestEnemy = nearestEnemy(armies);
+            if (nearestEnemy != null) {
+                if (checkRange(nearestEnemy)) {
+                    fire(nearestEnemy, score);
+                } else {
+                    this.getPosition().move(nearestEnemy, armies);
+                }
+            }
+        }
+
     }
 
+    protected ArrayList<BaseHero> findWounded(ArrayList<BaseHero> armies) {
+        ArrayList<BaseHero> wounded = new ArrayList<>();
+        for (BaseHero e : armies) {
+            if (e.getSide() == this.getSide() && e.isHurt() && !e.isDead(e)) {
+                wounded.add(e);
+            }
+        }
+        return wounded;
+    }
+
+    protected BaseHero findMostWounded(ArrayList<BaseHero> wounded) {
+        BaseHero mostWounded = wounded.get(0);
+        for (BaseHero e : wounded) {
+            if (mostWounded.getHealth() > e.getHealth()) mostWounded = e;
+        }
+        return mostWounded;
+    }
+
+    protected void fire(BaseHero enemy, Score score) {
+        mana.payMana(10);
+        this.inflictDamage(enemy, score);
+    }
+    @Override
+    public String toString() {
+        String str = super.toString();
+        if (!isDead(this)) str += " [Мана: " + mana.getMana() + "]";
+        return str;
+    }
 }

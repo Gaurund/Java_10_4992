@@ -24,12 +24,12 @@ public final class Peasant extends BaseHero {
         }
         BaseHero ranged = isRangedExisted(armies);
         if (ranged != null) {
-            System.out.print(" - Пополняем боеприпасы посредством крестьянина " + name + " стрелку " + ranged.name + ". Было: ");
+//            System.out.print(" - Пополняем боеприпасы посредством крестьянина " + name + " стрелку " + ranged.name + ". Было: ");
             ranged.getState().setBusy();
             this.getState().setBusy();
-            System.out.print(ranged.getArrows());
+//            System.out.print(ranged.getArrows());
             ranged.getAmmo().addArrow();
-            System.out.print(", стало: " + ranged.getArrows() + "\n");
+//            System.out.print(", стало: " + ranged.getArrows() + "\n");
         }
     }
 

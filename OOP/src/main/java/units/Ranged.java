@@ -18,9 +18,10 @@ public abstract class Ranged extends BaseHero {
         ammo.removeArrow();
         if (chance.nextInt(101) < accuracy) {
             this.inflictDamage(enemy, score);
-        } else {
-            System.out.println("Стрела прошла мимо!");
         }
+//        else {
+//            System.out.println("Стрела прошла мимо!");
+//        }
     }
 
 
@@ -39,9 +40,10 @@ public abstract class Ranged extends BaseHero {
             BaseHero nearestEnemy = nearestEnemy(armies);
             if (nearestEnemy != null) {
                 if (checkRange(nearestEnemy)){
-                    System.out.println(" >>> Цель: " + nearestEnemy);
+//                    System.out.println(" >>> Цель: " + nearestEnemy);
                     shoot(nearestEnemy, score);
                 } else {
+//                    System.out.println(this + " должен шагнуть");
                     this.getPosition().move(nearestEnemy, armies);
                 }
             }

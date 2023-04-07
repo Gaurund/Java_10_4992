@@ -1,12 +1,9 @@
 package units;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Position {
-    //    private final int heroX;
-//    private final int heroY;
-    private int[] positionArr;
+    private final int[] positionArr;
 
     public Position(int heroX, int heroY) {
         this.positionArr = new int[2];
@@ -62,19 +59,24 @@ public class Position {
     }
 
     private void moveXY(int counter, int mainDimension, int offDimension, int sign, ArrayList<BaseHero> armies) {
-        if (checkBorders(mainDimension, sign) && checkCell(mainDimension, sign, armies)) {
-            positionArr[mainDimension] += sign;
+        if (checkBorders(mainDimension, sign) && checkCell(mainDimension, offDimension, sign, armies)) {
+            this.positionArr[mainDimension] += sign;
             return;
         }
         counter += 1;
-        if (counter < 2) moveXY(counter, offDimension, mainDimension, sign, armies);
-        else if (counter == 3) moveXY(counter, mainDimension, offDimension, -sign, armies);
+        if (counter == 1) {
+            moveXY(counter, offDimension, mainDimension, sign, armies);
+        } else if (counter == 2) {
+            moveXY(counter, mainDimension, offDimension, -sign, armies);
+        }
     }
 
-    private boolean checkCell(int dimension, int sign, ArrayList<BaseHero> armies) {
-        int result = positionArr[dimension] + sign;
+    private boolean checkCell(int mainDimension, int offDimension, int sign, ArrayList<BaseHero> armies) {
+        int result = positionArr[mainDimension] + sign;
         for (BaseHero e : armies) {
-            if (!e.isDead(e) && e.position.positionArr[dimension] == result) return false;
+            if (!e.isDead(e) && e.position.positionArr[offDimension] == positionArr[offDimension] && e.position.positionArr[mainDimension] == result) {
+                return false;
+            }
         }
         return true;
     }
@@ -83,27 +85,5 @@ public class Position {
         int result = positionArr[dimension] + sign;
         return result > 0 && result < 11;
     }
-//    public Boolean move(String move) {
-//        int HIGH_LIMIT = 10;
-//        int LOW_LIMIT = 1;
-//        switch (move) {
-//            case "влево":
-//                if (this.heroX == LOW_LIMIT) return false;
-//                heroX -= 1;
-//                return true;
-//            case "вправо":
-//                if (this.heroX == HIGH_LIMIT) return false;
-//                heroX += 1;
-//                return true;
-//            case "вверх":
-//                if (this.heroY == LOW_LIMIT) return false;
-//                heroY -= 1;
-//                return true;
-//            case "вниз":
-//                if (this.heroY == HIGH_LIMIT) return false;
-//                heroY += 1;
-//                return true;
-//        }
-//        return null; // Без этой "заглушки" компилятор выдаёт ошибку.
-//    }
+
 }

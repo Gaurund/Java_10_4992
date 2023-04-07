@@ -8,17 +8,18 @@ import java.util.*;
 public class Main {
 
     static Scanner myScanner = new Scanner(System.in);
-
+    public static ArrayList<BaseHero> whites = new ArrayList<>();
+    public static ArrayList<BaseHero> blacks = new ArrayList<>();
+    public static ArrayList<BaseHero> armies = new ArrayList<>();
     public static void main(String[] args) {
 
         Score score = new Score();
         String[] winner = new String[] {"Белых!", "Чёрных!"};
 
-        ArrayList<BaseHero> whites = new ArrayList<>();
-        ArrayList<BaseHero> blacks = new ArrayList<>();
+
         FillHeroes(whites, 1);
         FillHeroes(blacks, 10);
-        ArrayList<BaseHero> armies = new ArrayList<>();
+
         armies.addAll(whites);
         armies.addAll(blacks);
 
@@ -36,12 +37,9 @@ public class Main {
 
         do {
 
-            System.out.println("\nВсе команды:");
-            armies.forEach(System.out::println);
+            View.view();
 
-            System.out.println("\nБой начался:");
             for (BaseHero e : armies) {
-                System.out.println(e);
                 e.step(armies, score);
             }
 

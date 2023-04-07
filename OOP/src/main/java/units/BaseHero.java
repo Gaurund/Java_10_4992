@@ -8,7 +8,7 @@ public abstract class BaseHero implements GameInterface {
     protected String className;
     protected Side side;
     protected int priority;
-    protected float health, maxHealth;
+    protected Health health;
     protected double range;
     protected int attack;
     protected int defense;
@@ -22,8 +22,7 @@ public abstract class BaseHero implements GameInterface {
         this.side = new Side(side);
         this.position = new Position(x, y);
         this.priority = randomizePriority(priority);
-        this.health = health;
-        this.maxHealth = health;
+        this.health = new Health(health);
         this.range = range;
         this.attack = attack;
         this.defense = defense;
@@ -68,7 +67,7 @@ public abstract class BaseHero implements GameInterface {
 
 
     public Float getHealth() {
-        return health;
+        return health.getHealth();
     }
 
     /**
@@ -76,9 +75,9 @@ public abstract class BaseHero implements GameInterface {
      * Setters
      * =======
      */
-    public void setHealth(float health) {
-        this.health = health;
-    }
+//    public void setHealth(float health) {
+//        this.health = health;
+//    }
 
     public Ammo getAmmo() {
         return null;
@@ -92,22 +91,25 @@ public abstract class BaseHero implements GameInterface {
         return 0;
     }
 
+    public void getDamage(float damage){
+        this.health.getDamage(damage);
+    }
     @Override
     public String getInfo() {
-        return className.toLowerCase();
+        return className;
     }
 
     public void inflictDamage(BaseHero enemy, Score score) {
         float damage = (this.attack - enemy.getDefense()) + (new Random().nextInt(this.damage[1] - this.damage[0]) + this.damage[0]);
-//          damage = damage / 10;
-        enemy.setHealth(enemy.getHealth() - damage);
-        System.out.print(" >>> Цель " + enemy.name + " получает урон " + damage);
+          damage = damage / 10;
+        enemy.getDamage(damage);
+//        System.out.print(" >>> Цель " + enemy.name + " получает урон " + damage);
         if (enemy.getHealth() <= 0) {
             enemy.die();
             score.decrementScore(enemy.getSide());
-            System.out.print(" и погибает");
+//            System.out.print(" и погибает");
         }
-        System.out.print(".\n");
+//        System.out.print(".\n");
     }
 
     public void upkeep() {
@@ -164,5 +166,9 @@ public abstract class BaseHero implements GameInterface {
     public boolean checkRange(BaseHero enemy) {
         double distance = this.position.getDistance(enemy.getPosition());
         return distance < range;
+    }
+
+    protected boolean isHurt() {
+        return this.health.isHurt();
     }
 }
