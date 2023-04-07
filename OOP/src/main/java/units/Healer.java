@@ -17,18 +17,21 @@ public abstract class Healer extends BaseHero {
         if (isDead(this)) {
             return;
         }
-        ArrayList<BaseHero> wounded = findWounded(armies);
-        if (wounded.size() > 0) {
-            BaseHero mostWounded = findMostWounded(wounded);
-            mostWounded.health.heal(restoreHealth);
-            mana.payMana(10);
-        } else {
-            BaseHero nearestEnemy = nearestEnemy(armies);
-            if (nearestEnemy != null) {
-                if (checkRange(nearestEnemy)) {
-                    fire(nearestEnemy, score);
-                } else {
-                    this.getPosition().move(nearestEnemy, armies);
+        if(!this.mana.isDepleted())
+        {
+            ArrayList<BaseHero> wounded = findWounded(armies);
+            if (wounded.size() > 0) {
+                BaseHero mostWounded = findMostWounded(wounded);
+                mostWounded.health.heal(restoreHealth);
+                mana.payMana(10);
+            } else {
+                BaseHero nearestEnemy = nearestEnemy(armies);
+                if (nearestEnemy != null) {
+                    if (checkRange(nearestEnemy)) {
+                        fire(nearestEnemy, score);
+                    } else {
+                        this.getPosition().move(nearestEnemy, armies);
+                    }
                 }
             }
         }

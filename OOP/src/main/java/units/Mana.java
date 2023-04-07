@@ -23,6 +23,9 @@ public class Mana {
         }
     }
 
+    public boolean isDepleted(){
+        return depleted;
+    }
     public void restoreMana(int newMana){
         this.mana = this.mana + newMana;
         this.depleted = false;

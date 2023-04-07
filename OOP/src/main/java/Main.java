@@ -50,6 +50,7 @@ public class Main {
             System.out.println(score);
         }
         while (Objects.equals(myScanner.nextLine(), ""));
+        View.view();
 
         System.out.println("\n\n================================================"+"\nИгра закончена. Победила команда " + winner[score.checkScore()]);
     }
