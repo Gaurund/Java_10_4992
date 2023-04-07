@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public interface GameInterface {
     boolean isDead(BaseHero hero);
+
+    boolean isWaiting();
     void step(ArrayList<BaseHero> armies, Score score);
 
     void upkeep();
@@ -18,9 +20,4 @@ public interface GameInterface {
 
     int getArrows();
 
-    int getMaxArrows();
-
-    void setArrows();
-
-    void setPlusOneArrow();
 }

@@ -57,10 +57,6 @@ public class Main {
     }
 
     private static String getName() {
-        return nameGen();//Names.values()[new Random().nextInt(Names.values().length)].toString();
-    }
-
-    private static String nameGen() {
         return firstSyl.values()[new Random().nextInt(firstSyl.values().length)].toString() +
                 midSyl.values()[new Random().nextInt(midSyl.values().length)].toString() +
                 lastSyl.values()[new Random().nextInt(lastSyl.values().length)].toString();
