@@ -7,8 +7,5 @@ public final class Monk extends Healer {
         super(className, name, 0, x, y, 6, 7, 13, 1, new int[]{7, 13}, 30, 3);
     }
 
-//    @Override
-//    public String getInfo() {
-//        return "Я монах";
-//    }
+
 }

@@ -34,7 +34,7 @@ public abstract class BaseHero implements GameInterface {
     public String toString() {
         int x = this.position.getX();
         int y = this.position.getY();
-        return side.getSideName() + " " + className + " " + name + " [x=" + x + ", y=" + y + "] ♥:" + this.getHealth() + " состояние: " + state.getStateName();
+        return className + " " + name + " [ ♥:" + this.getHealth() + " \u2694:" +this.attack + " \u26CA:" + this.defense + " ][" + state.getStateName() + "]";
     }
 
     private int randomizePriority(int priority) {
@@ -75,9 +75,7 @@ public abstract class BaseHero implements GameInterface {
      * Setters
      * =======
      */
-//    public void setHealth(float health) {
-//        this.health = health;
-//    }
+
 
     public Ammo getAmmo() {
         return null;
@@ -103,13 +101,10 @@ public abstract class BaseHero implements GameInterface {
         float damage = (this.attack - enemy.getDefense()) + (new Random().nextInt(this.damage[1] - this.damage[0]) + this.damage[0]);
           damage = damage / 10;
         enemy.getDamage(damage);
-//        System.out.print(" >>> Цель " + enemy.name + " получает урон " + damage);
         if (enemy.getHealth() <= 0) {
             enemy.die();
             score.decrementScore(enemy.getSide());
-//            System.out.print(" и погибает");
         }
-//        System.out.print(".\n");
     }
 
     public void upkeep() {

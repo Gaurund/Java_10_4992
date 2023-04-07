@@ -40,19 +40,19 @@ public class View {
     }
     public static void view() {
         if (turn == 1 ){
-            System.out.print(AnsiColors.ANSI_RED + "First turn" + AnsiColors.ANSI_RESET);
+            System.out.print(AnsiColors.ANSI_RED + "Первый ход" + AnsiColors.ANSI_RESET);
         } else {
-            System.out.print(AnsiColors.ANSI_RED + "Turn:" + turn + AnsiColors.ANSI_RESET);
+            System.out.print(AnsiColors.ANSI_RED + "Ход:" + turn + AnsiColors.ANSI_RESET);
         }
         turn++;
         Main.armies.forEach((v) -> l[0] = Math.max(l[0], v.toString().length()));
         System.out.print("_".repeat(l[0]*2));
         System.out.println("");
         System.out.print(top10 + "    ");
-        System.out.print("Blue side (Белые)");
+        System.out.print("Синие");
         //for (int i = 0; i < l[0]-9; i++)
-        System.out.print(" ".repeat(l[0]-17));
-        System.out.println(":\tGreen side (Чёрные)");
+        System.out.print(" ".repeat(l[0]-5));
+        System.out.println(":\tЗелёные");
         for (int i = 1; i < 11; i++) {
             System.out.print(getChar(1, i));
         }

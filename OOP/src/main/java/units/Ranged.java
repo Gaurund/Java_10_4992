@@ -19,9 +19,7 @@ public abstract class Ranged extends BaseHero {
         if (chance.nextInt(101) < accuracy) {
             this.inflictDamage(enemy, score);
         }
-//        else {
-//            System.out.println("Стрела прошла мимо!");
-//        }
+
     }
 
 
@@ -55,7 +53,7 @@ public abstract class Ranged extends BaseHero {
     @Override
     public String toString() {
         String str = super.toString();
-        if (!isDead(this)) str += " [Стрел: " + ammo.getArrows() + "]";
+        if (!isDead(this)) str += "[\u27B6: " + ammo.getArrows() + "]";
         return str;
     }
 

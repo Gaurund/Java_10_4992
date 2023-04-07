@@ -7,8 +7,5 @@ public final class Lancer extends Melee {
         super(className, name, 1, x, y, 10, 2,14, 6, new int[]{7, 13}, 15, 0, 4);
 
     }
-//    @Override
-//    public String getInfo() {
-//        return "Я копейщик";
-//    }
+
 }

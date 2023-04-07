@@ -63,7 +63,7 @@ public abstract class Healer extends BaseHero {
     @Override
     public String toString() {
         String str = super.toString();
-        if (!isDead(this)) str += " [Мана: " + mana.getMana() + "]";
+        if (!isDead(this)) str += "[\u26B6: " + mana.getMana() + "]";
         return str;
     }
 }

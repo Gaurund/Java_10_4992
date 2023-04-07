@@ -1,7 +1,7 @@
 package units;
 
 public class State {
-    private static final String[] states = new String[]{"† мёртв", "ждёт", "занят", "скрыт", "под магической защитой"};
+    private static final String[] states = new String[]{"\u2670 мёртв", "ждёт", "занят", "скрыт", "под магической защитой"};
     private int stateID;
 
     public State() {
