@@ -50,7 +50,7 @@ public class Main {
         }
         while (Objects.equals(myScanner.nextLine(), ""));
         View.view();
-        System.out.println("\n\n================================================" + "\nИгра закончена. Победила команда " + winner[score.checkScore()]);
+        System.out.println("\n\n================================================" + "\n\nИгра закончена. Победила команда " + winner[score.checkScore()]);
     }
 
     private static void sortArmies() {
