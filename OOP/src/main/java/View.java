@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Collections;
 import units.*;
 public class View {
@@ -22,63 +23,63 @@ public class View {
                 .replace('i', '\u2518')
                 .replace('-', '\u2500');
     }
-    private static String getChar(int x, int y){
+    private static String getChar(int x, int y, ArrayList<BaseHero> whites, ArrayList<BaseHero> blacks, ArrayList<BaseHero> armies){
         String out = "| ";
-        for (BaseHero e: Main.armies) {
+        for (BaseHero e: armies) {
             if (e.getPosition().getX() == x && e.getPosition().getY() == y
             ){
                 if (e.isDead(e)) {
                     out = "|" + (AnsiColors.ANSI_RED + e.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
                     break;
                 }
-                if (Main.blacks.contains(e)) out = "|" + (AnsiColors.ANSI_GREEN + e.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
-                if (Main.whites.contains(e)) out = "|" + (AnsiColors.ANSI_BLUE + e.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
+                if (blacks.contains(e)) out = "|" + (AnsiColors.ANSI_GREEN + e.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
+                if (whites.contains(e)) out = "|" + (AnsiColors.ANSI_BLUE + e.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
                 break;
             }
         }
         return out;
     }
-    public static void view() {
+    public static void view(ArrayList<BaseHero> whites, ArrayList<BaseHero> blacks, ArrayList<BaseHero> armies) {
         if (turn == 1 ){
             System.out.print(AnsiColors.ANSI_RED + "Первый ход" + AnsiColors.ANSI_RESET);
         } else {
             System.out.print(AnsiColors.ANSI_RED + "Ход:" + turn + AnsiColors.ANSI_RESET);
         }
         turn++;
-        Main.armies.forEach((v) -> l[0] = Math.max(l[0], v.toString().length()));
+        armies.forEach((v) -> l[0] = Math.max(l[0], v.toString().length()));
         System.out.print("_".repeat(l[0]*2));
         System.out.println("");
         System.out.print(top10 + "    ");
         System.out.print("Синие");
         //for (int i = 0; i < l[0]-9; i++)
-        System.out.print(" ".repeat(l[0]-5));
+        System.out.print(" ".repeat(l[0]-3));
         System.out.println(":\tЗелёные");
         for (int i = 1; i < 11; i++) {
-            System.out.print(getChar(1, i));
+            System.out.print(getChar(1, i, whites,blacks,armies));
         }
         System.out.print("|    ");
-        System.out.print(Main.whites.get(0));
-        tabSetter(Main.whites.get(0).toString().length(), l[0]);
-        System.out.println(Main.blacks.get(0));
+        System.out.print(whites.get(0));
+        tabSetter(whites.get(0).toString().length(), l[0]);
+        System.out.println(blacks.get(0));
         System.out.println(midl10);
 
         for (int i = 2; i < 10; i++) {
             for (int j = 1; j < 11; j++) {
-                System.out.print(getChar(i, j));
+                System.out.print(getChar(i, j, whites,blacks,armies));
             }
             System.out.print("|    ");
-            System.out.print(Main.whites.get(i-1));
-            tabSetter(Main.whites.get(i-1).toString().length(), l[0]);
-            System.out.println(Main.blacks.get(i-1));
+            System.out.print(whites.get(i-1));
+            tabSetter(whites.get(i-1).toString().length(), l[0]);
+            System.out.println(blacks.get(i-1));
             System.out.println(midl10);
         }
         for (int j = 1; j < 11; j++) {
-            System.out.print(getChar(10, j));
+            System.out.print(getChar(10, j, whites,blacks,armies));
         }
         System.out.print("|    ");
-        System.out.print(Main.whites.get(9));
-        tabSetter(Main.whites.get(9).toString().length(), l[0]);
-        System.out.println(Main.blacks.get(9));
+        System.out.print(whites.get(9));
+        tabSetter(whites.get(9).toString().length(), l[0]);
+        System.out.println(blacks.get(9));
         System.out.println(bottom10);
     }
 }

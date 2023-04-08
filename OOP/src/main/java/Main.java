@@ -7,28 +7,29 @@ import java.util.*;
 
 public class Main {
 
-    public static ArrayList<BaseHero> whites = new ArrayList<>();
-    public static ArrayList<BaseHero> blacks = new ArrayList<>();
-    public static ArrayList<BaseHero> armies = new ArrayList<>();
     static Scanner myScanner = new Scanner(System.in);
 
     public static void main(String[] args) {
 
-        createArmies();
-        printArmies();
-        sortArmies();
-        game();
+         ArrayList<BaseHero> whites = new ArrayList<>();
+         ArrayList<BaseHero> blacks = new ArrayList<>();
+         ArrayList<BaseHero> armies = new ArrayList<>();
+
+        createArmies(whites,blacks,armies);
+//        printArmies(whites,blacks);
+        sortArmies(armies);
+        game(whites,blacks,armies);
 
     }
 
-    private static void createArmies() {
+    private static void createArmies(ArrayList<BaseHero> whites,ArrayList<BaseHero> blacks,ArrayList<BaseHero> armies) {
         FillHeroes(whites, 1);
         FillHeroes(blacks, 10);
         armies.addAll(whites);
         armies.addAll(blacks);
     }
 
-    private static void printArmies() {
+    private static void printArmies(ArrayList<BaseHero> whites,ArrayList<BaseHero> blacks) { // Избыточный метод. Планируется к удалению.
         System.out.println("\nКоманда белых:");
         whites.forEach(System.out::println);
 
@@ -36,11 +37,11 @@ public class Main {
         blacks.forEach(System.out::println);
     }
 
-    private static void game() {
+    private static void game(ArrayList<BaseHero> whites,ArrayList<BaseHero> blacks, ArrayList<BaseHero> armies) {
         Score score = new Score();
         String[] winner = new String[]{"Синих!", "Зелёных!"};
         do {
-            View.view();
+            View.view(whites,blacks,armies);
             for (BaseHero e : armies) {
                 e.step(armies, score);
             }
@@ -49,11 +50,11 @@ public class Main {
             System.out.println(score);
         }
         while (Objects.equals(myScanner.nextLine(), ""));
-        View.view();
+        View.view(whites,blacks,armies);
         System.out.println("\n\n================================================" + "\n\nИгра закончена. Победила команда " + winner[score.checkScore()]);
     }
 
-    private static void sortArmies() {
+    private static void sortArmies(ArrayList<BaseHero> armies) {
         armies.sort(new Comparator<BaseHero>() {
             @Override
             public int compare(BaseHero o1, BaseHero o2) {
