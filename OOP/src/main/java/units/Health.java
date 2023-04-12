@@ -27,4 +27,8 @@ public class Health {
     public void getDamage(float damage){
         this.health = this.health - damage;
     }
+    public float howSeriousWoundIs(){
+        return maxHealth-health;
+    }
+
 }

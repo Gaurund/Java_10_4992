@@ -28,7 +28,7 @@ public class View {
         for (BaseHero e: armies) {
             if (e.getPosition().getX() == x && e.getPosition().getY() == y
             ){
-                if (e.isDead(e)) {
+                if (e.isDead()) {
                     out = "|" + (AnsiColors.ANSI_RED + e.getInfo().charAt(0) + AnsiColors.ANSI_RESET);
                     break;
                 }

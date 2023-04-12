@@ -7,14 +7,14 @@ public abstract class Healer extends BaseHero {
     Mana mana;
     float restoreHealth;
 
-    public Healer(String className, String name, int side, int x, int y, float health, double range, int attack, int defense, int[] damage, int priority, float restoreHealth) {
+    public Healer(String className, String name, int side, int x, int y, float health, float range, int attack, int defense, int[] damage, int priority, float restoreHealth) {
         super(className, name, side, x, y, health, range, attack, defense, damage, priority);
         this.mana = new Mana(100);
         this.restoreHealth = restoreHealth;
     }
 
     public void step(ArrayList<BaseHero> armies, Score score) {
-        if (isDead(this)) {
+        if (isDead()) {
             return;
         }
         if(!this.mana.isDepleted())
@@ -41,7 +41,7 @@ public abstract class Healer extends BaseHero {
     protected ArrayList<BaseHero> findWounded(ArrayList<BaseHero> armies) {
         ArrayList<BaseHero> wounded = new ArrayList<>();
         for (BaseHero e : armies) {
-            if (e.getSide() == this.getSide() && e.isHurt() && !e.isDead(e)) {
+            if (e.getSide() == this.getSide() && e.isHurt() && !e.isDead()) {
                 wounded.add(e);
             }
         }
@@ -51,7 +51,7 @@ public abstract class Healer extends BaseHero {
     protected BaseHero findMostWounded(ArrayList<BaseHero> wounded) {
         BaseHero mostWounded = wounded.get(0);
         for (BaseHero e : wounded) {
-            if (mostWounded.getHealth() > e.getHealth()) mostWounded = e;
+            if (mostWounded.howBadIsIt() < e.howBadIsIt()) mostWounded = e;
         }
         return mostWounded;
     }
@@ -63,7 +63,7 @@ public abstract class Healer extends BaseHero {
     @Override
     public String toString() {
         String str = super.toString();
-        if (!isDead(this)) str += "[\u26B6: " + mana.getMana() + "]";
+        if (!isDead()) str += "[\u26B6: " + mana.getMana() + "]";
         return str;
     }
 }

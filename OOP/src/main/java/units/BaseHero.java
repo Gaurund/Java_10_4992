@@ -16,7 +16,7 @@ public abstract class BaseHero implements GameInterface {
     protected Position position;
     protected State state;
 
-    public BaseHero(String className, String name, int side, int x, int y, float health, double range, int attack, int defense, int[] damage, int priority) {
+    public BaseHero(String className, String name, int side, int x, int y, float health, float range, int attack, int defense, int[] damage, int priority) {
         this.className = className;
         this.name = name;
         this.side = new Side(side);
@@ -70,6 +70,10 @@ public abstract class BaseHero implements GameInterface {
         return health.getHealth();
     }
 
+    public Float howBadIsIt(){
+        return  health.howSeriousWoundIs();
+    }
+
     /**
      * =======
      * Setters
@@ -108,13 +112,13 @@ public abstract class BaseHero implements GameInterface {
     }
 
     public void upkeep() {
-        if (!isDead(this) && isBusy(this)) {
+        if (!isDead() && isBusy()) {
             state.setWaiting();
         }
     }
 
-    private boolean isBusy(BaseHero hero) {
-        return hero.getState().isBusy(hero);
+    private boolean isBusy() {
+        return this.state.isBusy();
     }
 
     protected boolean isEnemy(BaseHero hero) {
@@ -129,6 +133,9 @@ public abstract class BaseHero implements GameInterface {
         return hero.getState().isDead(hero);
     }
 
+    public boolean isDead() {
+        return this.state.isDead();
+    }
     public boolean isHidden(BaseHero hero) {
         return hero.getState().isHidden(hero);
     }
@@ -159,7 +166,7 @@ public abstract class BaseHero implements GameInterface {
     }
 
     public boolean checkRange(BaseHero enemy) {
-        double distance = this.position.getDistance(enemy.getPosition());
+        float distance = this.position.getDistance(enemy.getPosition());
         return distance < range;
     }
 

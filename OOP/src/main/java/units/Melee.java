@@ -6,7 +6,7 @@ public abstract class Melee extends BaseHero {
     int rage;
     int maxRage;
 
-    public Melee(String className, String name, int side, int x, int y, float health, double range, int attack, int defense, int[] damage, int priority, int rage, int maxRage) {
+    public Melee(String className, String name, int side, int x, int y, float health, float range, int attack, int defense, int[] damage, int priority, int rage, int maxRage) {
         super(className, name, side, x, y, health, range, attack, defense, damage, priority);
         this.rage = rage;
         this.maxRage = maxRage;
@@ -17,7 +17,7 @@ public abstract class Melee extends BaseHero {
     }
 
     public void step(ArrayList<BaseHero> armies, Score score) {
-        if (isDead(this)) {
+        if (isDead()) {
             return;
         }
         BaseHero nearestEnemy = nearestEnemy(armies);

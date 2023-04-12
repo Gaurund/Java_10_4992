@@ -23,17 +23,17 @@ public class Main {
     }
 
     private static void createArmies(ArrayList<BaseHero> whites,ArrayList<BaseHero> blacks,ArrayList<BaseHero> armies) {
-        FillHeroes(whites, 1);
-        FillHeroes(blacks, 10);
+        fillArmy(whites, 1);
+        fillArmy(blacks, 10);
         armies.addAll(whites);
         armies.addAll(blacks);
     }
 
     private static void printArmies(ArrayList<BaseHero> whites,ArrayList<BaseHero> blacks) { // Избыточный метод. Планируется к удалению.
-        System.out.println("\nКоманда белых:");
+        System.out.println("\nКоманда синих:");
         whites.forEach(System.out::println);
 
-        System.out.println("\nКоманда черных:");
+        System.out.println("\nКоманда зелёных:");
         blacks.forEach(System.out::println);
     }
 
@@ -51,16 +51,16 @@ public class Main {
         }
         while (Objects.equals(myScanner.nextLine(), ""));
         View.view(whites,blacks,armies);
-        System.out.println("\n\n================================================" + "\n\nИгра закончена. Победила команда " + winner[score.checkScore()]);
+        System.out.println("\n\n================================================" + "\n\nИгра закончена.");
+        if (score.checkScore() == 3){
+            System.out.println("Победила дружба!");
+        } else {
+            System.out.println("Победила команда " + winner[score.checkScore()]);
+        }
     }
 
     private static void sortArmies(ArrayList<BaseHero> armies) {
-        armies.sort(new Comparator<BaseHero>() {
-            @Override
-            public int compare(BaseHero o1, BaseHero o2) {
-                return o1.getPriority() - o2.getPriority();
-            }
-        });
+        armies.sort(Comparator.comparingInt(BaseHero::getPriority));
     }
 
     private static String getName() {
@@ -69,7 +69,7 @@ public class Main {
                 lastSyl.values()[new Random().nextInt(lastSyl.values().length)].toString();
     }
 
-    private static void FillHeroes(ArrayList<BaseHero> list, int shift) {
+    private static void fillArmy(ArrayList<BaseHero> list, int shift) {
         Random rnd = new Random();
         for (int x = 1; x < 11; x++) {
             switch (rnd.nextInt(4) + shift) {

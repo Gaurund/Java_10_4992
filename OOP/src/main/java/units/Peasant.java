@@ -19,7 +19,7 @@ public final class Peasant extends BaseHero {
     }
 
     public void step(ArrayList<BaseHero> armies, Score score) {
-        if (isDead(this)) {
+        if (isDead()) {
             return;
         }
         BaseHero ranged = isRangedExisted(armies);
@@ -29,7 +29,7 @@ public final class Peasant extends BaseHero {
             ranged.getAmmo().addArrow();
         }
         for (BaseHero e : armies) {
-            if (checkRange(e)) this.inflictDamage(e, score);
+            if (checkRange(e) && isEnemy(e)) inflictDamage(e, score);
         }
     }
 

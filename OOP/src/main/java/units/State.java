@@ -34,8 +34,10 @@ public class State {
         return hero.getState().getStateID() == 0;
     }
 
-    public boolean isBusy(BaseHero hero){
-        return hero.getState().getStateID() == 2;
+    public boolean isDead(){ return  this.getStateID() == 0;}
+
+    public boolean isBusy(){
+        return stateID == 2;
     }
     public boolean isWaiting(BaseHero hero){
         return hero.getState().getStateID() == 1;

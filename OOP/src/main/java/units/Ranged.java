@@ -7,7 +7,7 @@ public abstract class Ranged extends BaseHero {
     int accuracy;
     private final Ammo ammo;
 
-    public Ranged(String className, String name, int side, int x, int y, float health, double range, int attack, int defense, int[] damage, int priority, int arrows, int accuracy) {
+    public Ranged(String className, String name, int side, int x, int y, float health, float range, int attack, int defense, int[] damage, int priority, int arrows, int accuracy) {
         super(className, name, side, x, y, health, range, attack, defense, damage, priority);
         this.ammo = new Ammo(arrows);
         this.accuracy = accuracy;
@@ -30,7 +30,7 @@ public abstract class Ranged extends BaseHero {
 
     @Override
     public void step(ArrayList<BaseHero> armies, Score score) {
-        if (isDead(this)) {
+        if (isDead()) {
             return;
         }
 
@@ -53,7 +53,7 @@ public abstract class Ranged extends BaseHero {
     @Override
     public String toString() {
         String str = super.toString();
-        if (!isDead(this)) str += "[\u27B6: " + ammo.getArrows() + "]";
+        if (!isDead()) str += "[\u27B6: " + ammo.getArrows() + "]";
         return str;
     }
 
