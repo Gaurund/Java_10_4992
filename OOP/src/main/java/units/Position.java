@@ -5,10 +5,10 @@ import java.util.ArrayList;
 public class Position {
     private final int[] positionArr;
 
-    public Position(int heroX, int heroY) {
+    public Position(int x, int y) {
         this.positionArr = new int[2];
-        this.positionArr[0] = heroX;
-        this.positionArr[1] = heroY;
+        this.positionArr[0] = x;
+        this.positionArr[1] = y;
     }
 
     public int getX() {
@@ -27,42 +27,42 @@ public class Position {
                 ')';
     }
 
-    public int[] getDirection(Position enemyPosition) {
-        int enemyX = enemyPosition.getX();
-        int enemyY = enemyPosition.getY();
+    public int[] getDirection(BaseHero enemy) {
+        int enemyX = enemy.position.getX();
+        int enemyY = enemy.position.getY();
         return new int[]{enemyX - getX(), enemyY - getY()};
     }
 
-    public float getDistance(Position enemyPosition) {
-        int enemyX = enemyPosition.getX();
-        int enemyY = enemyPosition.getY();
-        return (float)Math.sqrt(((getX() - enemyX) * (getX() - enemyX)) + ((getY() - enemyY) * (getY() - enemyY)));
+    public float getDistance(BaseHero enemy) {
+        int enemyX = enemy.position.getX();
+        int enemyY = enemy.position.getY();
+        return (float) Math.sqrt(((getX() - enemyX) * (getX() - enemyX)) + ((getY() - enemyY) * (getY() - enemyY)));
     }
 
 
     public void move(BaseHero enemy, ArrayList<BaseHero> armies) {
-        int[] direction = getDirection(enemy.getPosition());
+        int[] direction = getDirection(enemy);
         int x = direction[0];
         int y = direction[1];
-        int leftOrRight = (int)Math.signum(x);
-        int upOrDown = (int)Math.signum(y);
+        int leftOrRight = (int) Math.signum(x);
+        int upOrDown = (int) Math.signum(y);
         if (Math.abs(x) >= Math.abs(y)) {
-            moveXY(0, 0, 1, leftOrRight, armies);
+            moving(0, 0, 1, leftOrRight, armies);
         } else {
-            moveXY(0, 1, 0, upOrDown, armies);
+            moving(0, 1, 0, upOrDown, armies);
         }
     }
 
-    private void moveXY(int counter, int mainDimension, int offDimension, int sign, ArrayList<BaseHero> armies) {
+    private void moving(int counter, int mainDimension, int offDimension, int sign, ArrayList<BaseHero> armies) {
         if (checkBorders(mainDimension, sign) && checkCell(mainDimension, offDimension, sign, armies)) {
             positionArr[mainDimension] += sign;
             return;
         }
         counter += 1;
         if (counter == 1) {
-            moveXY(counter, offDimension, mainDimension, sign, armies);
+            moving(counter, offDimension, mainDimension, sign, armies);
         } else if (counter == 2) {
-            moveXY(counter, mainDimension, offDimension, -sign, armies);
+            moving(counter, mainDimension, offDimension, -sign, armies);
         }
     }
 

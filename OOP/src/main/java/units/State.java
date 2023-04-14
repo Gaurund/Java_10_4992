@@ -19,35 +19,36 @@ public class State {
     private void setState(int state) {
         stateID = state;
     }
-    public void setBusy(){
+
+    public void die() {
+        setState(0);
+    }
+    public void setBusy() {
         setState(2);
     }
 
-    public void setWaiting(){
+    public void setWaiting() {
         setState(1);
     }
-    public void die(){
-        setState(0);
+
+
+    public boolean isDead() {
+        return this.getStateID() == 0;
     }
 
-    public boolean isDead(BaseHero hero){
-        return hero.getState().getStateID() == 0;
+
+    public boolean isWaiting() {
+        return stateID == 1;
     }
-
-    public boolean isDead(){ return  this.getStateID() == 0;}
-
-    public boolean isBusy(){
+    public boolean isBusy() {
         return stateID == 2;
     }
-    public boolean isWaiting(BaseHero hero){
-        return hero.getState().getStateID() == 1;
+
+    public boolean isHidden() {
+        return stateID == 3;
     }
 
-    public boolean isHidden(BaseHero hero){
-        return hero.getState().getStateID() == 3;
-    }
-
-    public boolean isShielded(BaseHero hero){
-        return hero.getState().getStateID() == 4;
+    public boolean isShielded() {
+        return stateID == 4;
     }
 }

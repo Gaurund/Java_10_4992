@@ -2,8 +2,8 @@ package units;
 
 public class Health {
 
-    private float health;
     private final float maxHealth;
+    private float health;
 
 
     public Health(float health) {
@@ -11,24 +11,25 @@ public class Health {
         this.maxHealth = health;
     }
 
-    public boolean isHurt(){
+    public boolean isHurt() {
         return health != maxHealth;
     }
 
-    public void heal(float healing){
-        this.health = this.health + healing;
-        if (this.health > this.maxHealth) this.health = this.maxHealth;
+    public void heal(float healing) {
+        health = health + healing;
+        if (health > maxHealth) health = maxHealth;
     }
 
-    public float getHealth(){
-        return this.health;
+    public float getHealth() {
+        return health;
     }
 
-    public void getDamage(float damage){
-        this.health = this.health - damage;
+    public void getDamage(float damage) {
+        health = health - damage;
     }
-    public float howSeriousWoundIs(){
-        return maxHealth-health;
+
+    public float woundValue() {
+        return maxHealth - health;
     }
 
 }

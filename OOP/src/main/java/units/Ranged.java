@@ -61,16 +61,5 @@ public abstract class Ranged extends BaseHero {
     public Ammo getAmmo() {
         return ammo;
     }
-    public int getArrows() {
-        return ammo.getArrows();
-    }
-//    public int getMaxArrows() {
-//        return maxArrows;
-//    }
-//    public void setArrows(int arrows) {
-//        this.arrows = arrows;
-//    }
-//    public void setPlusOneArrow() {
-//        this.arrows += 1;
-//    }
+
 }

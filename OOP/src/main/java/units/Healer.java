@@ -1,7 +1,6 @@
 package units;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public abstract class Healer extends BaseHero {
     Mana mana;
@@ -51,7 +50,7 @@ public abstract class Healer extends BaseHero {
     protected BaseHero findMostWounded(ArrayList<BaseHero> wounded) {
         BaseHero mostWounded = wounded.get(0);
         for (BaseHero e : wounded) {
-            if (mostWounded.howBadIsIt() < e.howBadIsIt()) mostWounded = e;
+            if (mostWounded.woundValue() < e.woundValue()) mostWounded = e;
         }
         return mostWounded;
     }

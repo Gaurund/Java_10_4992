@@ -41,11 +41,6 @@ public abstract class BaseHero implements GameInterface {
         return new Random().nextInt(15) + priority;
     }
 
-    /**
-     * =======
-     * Getters
-     * =======
-     */
     public int getPriority() {
         return priority;
     }
@@ -70,15 +65,9 @@ public abstract class BaseHero implements GameInterface {
         return health.getHealth();
     }
 
-    public Float howBadIsIt(){
-        return  health.howSeriousWoundIs();
+    public Float woundValue(){
+        return  health.woundValue();
     }
-
-    /**
-     * =======
-     * Setters
-     * =======
-     */
 
 
     public Ammo getAmmo() {
@@ -87,10 +76,6 @@ public abstract class BaseHero implements GameInterface {
 
     public int getDefense() {
         return defense;
-    }
-
-    public int getArrows() {
-        return 0;
     }
 
     public void getDamage(float damage){
@@ -102,9 +87,9 @@ public abstract class BaseHero implements GameInterface {
     }
 
     public void inflictDamage(BaseHero enemy, Score score) {
-        float damage = (this.attack - enemy.getDefense()) + (new Random().nextInt(this.damage[1] - this.damage[0]) + this.damage[0]);
-          damage = damage / 10;
-        enemy.getDamage(damage);
+        float damageValue = (attack - enemy.getDefense()) + (new Random().nextInt(damage[1] - damage[0]) + damage[0]);
+          damageValue = damageValue / 10;
+        enemy.getDamage(damageValue);
         if (enemy.getHealth() <= 0) {
             enemy.die();
             score.decrementScore(enemy.getSide());
@@ -112,36 +97,29 @@ public abstract class BaseHero implements GameInterface {
     }
 
     public void upkeep() {
-        if (!isDead() && isBusy()) {
+        if (isBusy()) {
             state.setWaiting();
         }
-    }
-
-    private boolean isBusy() {
-        return this.state.isBusy();
     }
 
     protected boolean isEnemy(BaseHero hero) {
         return hero.getSide() != this.getSide();
     }
-
-    public boolean isWaiting() {
-        return state.isWaiting(this);
-    }
-
-    public boolean isDead(BaseHero hero) {
-        return hero.getState().isDead(hero);
-    }
-
     public boolean isDead() {
-        return this.state.isDead();
+        return state.isDead();
     }
-    public boolean isHidden(BaseHero hero) {
-        return hero.getState().isHidden(hero);
+    private boolean isBusy() {
+        return state.isBusy();
+    }
+    public boolean isWaiting() {
+        return state.isWaiting();
+    }
+    public boolean isHidden() {
+        return state.isHidden();
     }
 
-    public boolean isShielded(BaseHero hero) {
-        return hero.getState().isShielded(hero);
+    public boolean isShielded() {
+        return state.isShielded();
     }
 
     public void die() {
@@ -149,12 +127,12 @@ public abstract class BaseHero implements GameInterface {
     }
 
     public BaseHero nearestEnemy(ArrayList<BaseHero> armies) {
-        double minDistance = 100;
+        float minDistance = 100;
         BaseHero enemy = null;
         for (BaseHero e : armies) {
-            if (isDead(e) || isHidden(e) || isShielded(e)) continue;
+            if (e.isDead() || e.isHidden() || e.isShielded()) continue;
             if (isEnemy(e)) {
-                double estimatedDistance = position.getDistance(e.getPosition());
+                float estimatedDistance = position.getDistance(e);
                 if (minDistance > estimatedDistance) {
                     minDistance = estimatedDistance;
                     enemy = e;
@@ -166,11 +144,11 @@ public abstract class BaseHero implements GameInterface {
     }
 
     public boolean checkRange(BaseHero enemy) {
-        float distance = this.position.getDistance(enemy.getPosition());
+        float distance = position.getDistance(enemy);
         return distance < range;
     }
 
     protected boolean isHurt() {
-        return this.health.isHurt();
+        return health.isHurt();
     }
 }

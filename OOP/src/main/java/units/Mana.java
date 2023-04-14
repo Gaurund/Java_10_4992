@@ -16,10 +16,10 @@ public class Mana {
     }
 
     public void payMana(int cost){
-        this.mana = this.mana - cost;
-        if(this.mana <= 0) {
-            this.mana = 0;
-            this.depleted = true;
+        mana = mana - cost;
+        if(mana <= 0) {
+            mana = 0;
+            depleted = true;
         }
     }
 
@@ -27,10 +27,10 @@ public class Mana {
         return depleted;
     }
     public void restoreMana(int newMana){
-        this.mana = this.mana + newMana;
-        this.depleted = false;
-        if(this.mana >= this.maxMana){
-            this.mana = this.maxMana;
+        mana = mana + newMana;
+        depleted = false;
+        if(mana >= maxMana){
+            mana = maxMana;
         }
 
     }

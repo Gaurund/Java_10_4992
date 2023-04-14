@@ -29,14 +29,6 @@ public class Main {
         armies.addAll(blacks);
     }
 
-    private static void printArmies(ArrayList<BaseHero> whites,ArrayList<BaseHero> blacks) { // Избыточный метод. Планируется к удалению.
-        System.out.println("\nКоманда синих:");
-        whites.forEach(System.out::println);
-
-        System.out.println("\nКоманда зелёных:");
-        blacks.forEach(System.out::println);
-    }
-
     private static void game(ArrayList<BaseHero> whites,ArrayList<BaseHero> blacks, ArrayList<BaseHero> armies) {
         Score score = new Score();
         String[] winner = new String[]{"Синих!", "Зелёных!"};
